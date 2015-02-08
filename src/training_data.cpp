@@ -2,6 +2,8 @@
 
 using namespace std;
 
+/* GET TOPOLOGY FOR THE NETWORK
+*********************************/
 void training_data::get_topology(vector<unsigned> &topology){
 	string line;
 	string label;
@@ -22,10 +24,8 @@ void training_data::get_topology(vector<unsigned> &topology){
 	return;
 }
 
-training_data::training_data(const string filename){
-	m_training_data_file.open(filename.c_str());
-}
-
+/* GET NEXT INPUTS FROM THE TRAINING SET 
+*****************************************/
 unsigned training_data::get_next_inputs(vector<double> &input_values){
 	input_values.clear();
 	string line;
@@ -43,6 +43,8 @@ unsigned training_data::get_next_inputs(vector<double> &input_values){
 	return input_values.size();
 }
 
+/* GET NEXT OUTPUTS FROM THE TRAINING SET 
+*****************************************/
 unsigned training_data::get_target_outputs(vector<double> &target_output_values){
 	target_output_values.clear();
 	string line;
@@ -58,4 +60,11 @@ unsigned training_data::get_target_outputs(vector<double> &target_output_values)
 		}
 	}
 	return target_output_values.size();
+}
+
+
+/* CONSTRUCTOR
+**************/
+training_data::training_data(const string filename){
+	m_training_data_file.open(filename.c_str());
 }
