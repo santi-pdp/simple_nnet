@@ -1,4 +1,4 @@
-# simple_nnet
+# Neural Network Demo
 Simple neural network demo, to run it:
 
 Execution:
