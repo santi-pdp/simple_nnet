@@ -1,5 +1,6 @@
 #include "training_data.h"
 #include "neural_network.h"
+#include <cstring>
 
 void show_vector_values(string label, vector<double> &v){
 	cout << label << " ";
@@ -7,6 +8,14 @@ void show_vector_values(string label, vector<double> &v){
 		cout << v[i] << " ";
 	}
 	cout << endl;
+}
+
+void prob_to_class(vector<double> &v){
+	vector<double> tmp = v;
+	v.clear();
+	for(unsigned i=0;i<tmp.size();++i){
+		v.push_back((tmp[i]>0.5?1:0));	
+	}
 }
 
 int main(){
@@ -44,19 +53,23 @@ int main(){
 		cout << "Net recent average error: " << my_net.get_recent_avg_error() << endl;
 	}
 	cout << endl << "Done with training!" << endl;
-	double arg1, arg2;
+	cout << "-------------------------" << endl;
 	while(true){
-		cout << "insert first input: ";
-		cin >> arg1;
-		cout << endl << "insert second input: ";
-		cin >> arg2;
-		cout << endl;
 		input_values.clear();
-		input_values.push_back(arg1);
-		input_values.push_back(arg2);
+		input_values.resize(topology[0]);
+		for(unsigned k=0;k<topology[0];k++){
+			cout << "Insert " << k << " input:";
+			cin >> input_values[k];
+			cout << endl;
+		}
+		//forward results in the net
 		my_net.feed_forward(input_values);
+		//get the outputs
 		my_net.get_results(result_values);
-		show_vector_values("Outputs: ", result_values);
+		prob_to_class(result_values);
+		cout << "______________________________" << endl;
+		show_vector_values("Result: ", result_values);
+		cout << endl;	
 	}
 	return 0;
 }
